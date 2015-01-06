@@ -7,3 +7,4 @@ This rep will allows you to create a zip file on the clients device without crea
 * If you have several files and the user has to pick the ones he wants before download, this rep will allow you to force a download instantly (without creating a zip file on the server first).
 * If you have large files to serve to the client.
 
+Credits to: [Lee on StackOverflow](http://stackoverflow.com/users/416630/lee) for help.
