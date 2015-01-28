@@ -11,8 +11,10 @@
 	if (is_array($files))
 		$files = implode(" ",$files);
 	**********************************************/	
-	if ($files)
+	if ($files){
+		(string)$_files;
 		$fp = popen('zip -r - '.$files, 'r');
+	}
 	else
 		$fp = popen('zip -r - 1.jpg 2.jpg 3.jpg', 'r');
 	$bufsize = 8192;
