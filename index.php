@@ -12,12 +12,13 @@
 		$files = implode(" ",$files);
 	**********************************************/	
 	if ($files){
-		(string)$_files;
+		(string)$files; //without static casting into string, the escape characters were messing with the buffer (probably cutting off earlier)
 		$fp = popen('zip -r - '.$files, 'r');
 	}
 	else
 		$fp = popen('zip -r - 1.jpg 2.jpg 3.jpg', 'r');
-	$bufsize = 8192;
+		
+	$bufsize = 8192; //apperently max buffer size is 8192 before cutoff
 	$buff = '';
 	while( !feof($fp) ) {
 	   $buff = fread($fp, $bufsize);
