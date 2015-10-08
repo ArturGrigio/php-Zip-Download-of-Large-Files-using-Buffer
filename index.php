@@ -1,7 +1,10 @@
 <?php 
+	header('Pragma: no-cache' ); 
+	header('Content-Description: File Download' ); 
 	header('Content-disposition: attachment; filename="myZip.zip"');
 	header('Content-Type: application/octet-stream');
 	header('Content-Length: 5000000') // You will have to either pass a variable to Content-Length or assign a value in bytes
+	header( 'Content-Transfer-Encoding: binary' ); 
 
 	//if using a MySQL database
 	/**********************************************
@@ -25,7 +28,7 @@
 	while( !feof($fp) ) {
 	   $buff = fread($fp, $bufsize);
 	   echo $buff;
-	   flush() //flusing the buffer afte reach fread
+	   flush() //flusing the buffer after each fread
 	}
 	pclose($fp);
 ?>
