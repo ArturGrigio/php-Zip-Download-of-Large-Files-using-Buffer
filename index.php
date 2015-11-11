@@ -1,5 +1,5 @@
 <?php 
-	$files = array("1.jpg", "2.jpg", "3.jpg");
+	$files = array("testFiles/1.jpg", "testFiles/2.jpg", "testFiles/3.jpg");
 
 	//Getting the total size of the files array
 	$totalSize = 0;
@@ -7,12 +7,12 @@
 		$totalSize += filesize($file);
 	}
 
-	header('Pragma: no-cache' ); 
-	header('Content-Description: File Download' ); 
+	header('Pragma: no-cache'); 
+	header('Content-Description: File Download'); 
 	header('Content-disposition: attachment; filename="myZip.zip"');
 	header('Content-Type: application/octet-stream');
 	header('Content-Length: ' . $totalSize+300); //I don't understand why, but the total length is always 300kb short of the correct size
-	header( 'Content-Transfer-Encoding: binary' ); 
+	header('Content-Transfer-Encoding: binary'); 
 
 	//Opening a zip stream
 	$files = implode(" ", $files);
