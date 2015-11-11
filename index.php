@@ -1,34 +1,32 @@
 <?php 
+	$files = array("1.jpg", "2.jpg", "3.jpg");
+
+	//Getting the total size of the files array
+	$totalSize = 0;
+	foreach ($files as $file) {
+		$totalSize += filesize($file);
+	}
+
 	header('Pragma: no-cache' ); 
 	header('Content-Description: File Download' ); 
 	header('Content-disposition: attachment; filename="myZip.zip"');
 	header('Content-Type: application/octet-stream');
-	header('Content-Length: 5000000') // You will have to either pass a variable to Content-Length or assign a value in bytes
+	header('Content-Length: ' . $totalSize+300); //I don't understand why, but the total length is always 300kb short of the correct size
 	header( 'Content-Transfer-Encoding: binary' ); 
 
-	//if using a MySQL database
-	/**********************************************
-	$query = 'SELECT `tableName` FROM `dbName`;';
-	$result = mysqli_query($link, $query);
-	$info = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$files = $info['tableName'];
-	if (is_array($files))
-		$files = implode(" ",$files);
-	**********************************************/	
+	//Opening a zip stream
+	$files = implode(" ", $files);
 	if ($files){
-		$fp = popen('zip -r - '.$files, 'r');
-	}
-	else{
-		$fp = popen('zip -r - 1.jpg 2.jpg 3.jpg', 'r');
+		$fp = popen('zip -r -0 - '.$files, 'r');
 	}
 	
-	flush() //flushing the buffer once brfore using	
-	$bufsize = 8192; //apperently max buffer size is 8192 before cutoff
-	$buff = '';
-	while( !feof($fp) ) {
-	   $buff = fread($fp, $bufsize);
-	   echo $buff;
-	   flush() //flusing the buffer after each fread
+	flush(); //Flushing the butter, pre streaming
+	while(!feof($fp)) {
+	   echo fread($fp, 8192);
 	}
-	pclose($fp);
+
+	//Closing the stream
+	if ($files){ 
+		pclose($fp);
+	}
 ?>
